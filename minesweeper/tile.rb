@@ -2,8 +2,7 @@ require 'byebug'
 
 class Tile
 
-  attr_reader :position, :board, :value, :bombed, :flagged, :revealed
-
+  attr_reader :position, :board, :value, :bombed, :flagged, :revealed, :value
 
   def initialize(row, col, board)
     @bombed = false
@@ -26,8 +25,16 @@ class Tile
     false
   end
 
+  def revealed?
+    @revealed
+  end
+
   def plant_flag
     @flagged = true
+  end
+
+  def remove_flag
+    @flagged = false
   end
 
   def flagged?
@@ -65,5 +72,8 @@ class Tile
   def bombed?
     @bombed
   end
+
+  protected
+  attr_writer :value
 
 end

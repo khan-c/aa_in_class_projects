@@ -53,8 +53,9 @@ class Board
     end
   end
 
-  def plant_flag(pos)
-    self[pos].plant_flag
+  def toggle_flag(pos)
+    tile = self[pos]
+    tile.flagged? ? tile.remove_flag : tile.plant_flag
   end
 
   def [](pos)
@@ -66,5 +67,12 @@ class Board
     @game_over
   end
 
+  def won?
+    bombless_tiles = @grid.flatten.reject { |tile| tile.bombed? }
+    bombless_tiles.all? { |tile| tile.revealed? }
+  end
 
+  def valid_move?(pos)
+    pos.all? { |x| (0...@grid.length).cover?(x) } || !self[pos].revealed? || !self[pos].flagged?
+  end
 end
