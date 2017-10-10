@@ -1,8 +1,8 @@
 require 'byebug'
+
 class Tile
 
-  attr_reader :position, :board
-  attr_accessor :value, :bombed, :flagged, :revealed
+  attr_reader :position, :board, :value, :bombed, :flagged, :revealed
 
 
   def initialize(row, col, board)
@@ -26,10 +26,18 @@ class Tile
     false
   end
 
+  def plant_flag
+    @flagged = true
+  end
+
+  def flagged?
+    @flagged
+  end
+
   def neighbors
     #check pos against board
     my_neighbors = []
-    pos_arr = [[-1,0], [-1,-1], [0,-1], [1,-1], [1,0], [1,1],[0,1],[-1,1]]
+    pos_arr = [[-1,0], [-1,-1], [0,-1], [1,-1], [1,0], [1, 1], [0, 1], [-1, 1]]
 
     pos_arr.each do |pos|
       neighbor_pos = find_neighbor_pos(pos)
@@ -52,6 +60,10 @@ class Tile
     neighbors.each do |neighbor|
       neighbor.value += 1
     end
+  end
+
+  def bombed?
+    @bombed
   end
 
 end
